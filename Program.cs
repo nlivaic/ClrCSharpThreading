@@ -6,7 +6,7 @@ namespace Clr
     {
         static void Main(string[] args)
         {
-            new _2_ForegroundBackgroundThreads().Execute();
+            new _3_ThreadPoolExample().Execute();
         }
     }
 }
