@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Clr
 {
-    public class _1_ThreadsExample
+    public class _1_ThreadsExample : IExample
     {
         public void Execute()
         {

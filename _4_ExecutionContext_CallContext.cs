@@ -6,7 +6,7 @@ namespace Clr
     /// <summary>
     /// Examples won't work because `CallContext` does not exist in .NET Core.
     /// </summary>
-    public class _4_ExecutionContext_CallContext
+    public class _4_ExecutionContext_CallContext : IExample
     {
         public void Execute()
         {

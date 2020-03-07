@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Clr
 {
-    public class _2_ForegroundBackgroundThreads
+    public class _2_ForegroundBackgroundThreads : IExample
     {
 
         /// <summary>

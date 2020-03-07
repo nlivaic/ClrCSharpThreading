@@ -6,7 +6,7 @@ namespace Clr
     {
         static void Main(string[] args)
         {
-            new _3_ThreadPoolExample().Execute();
+            new _5_CancellationTokens().Execute();
         }
     }
 }
