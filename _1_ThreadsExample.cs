@@ -8,7 +8,7 @@ namespace Clr
         public void Execute()
         {
             Console.WriteLine("Starting work in main thread.");
-            Thread thread = new Thread(Worker);
+            Thread thread = new Thread(Compute);
             thread.Start(5);
             Console.WriteLine("Doing other work in main thread.");
             Thread.Sleep(1000);
@@ -16,7 +16,7 @@ namespace Clr
             Console.WriteLine("Work in main thread finished.");
         }
 
-        public void Worker(object state)
+        public void Compute(object state)
         {
             Console.WriteLine($"Worker state={state}.");
             Thread.Sleep(1000);
