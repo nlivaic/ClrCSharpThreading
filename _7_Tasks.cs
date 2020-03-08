@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,8 @@ namespace Clr
             // Calling thread will wait on .Result as well.
             newTaskCompute.Wait();
             var newTaskResult = newTaskCompute.Result;
-            Console.WriteLine($"Task created using `new Task` completed, resulting in {newTaskResult}.");
+            Console.WriteLine($"Task created using `new Task` completed, resulting in {newTaskResult}, " +
+                $"completed successfully: {newTaskCompute.IsCompletedSuccessfully}");
 
             // Task.Run()
             Console.WriteLine($"Task created using `Task.Run()`.");
@@ -30,7 +32,8 @@ namespace Clr
             var taskRunCompute = Task.Run(() => ComputeWithTask(inputValue));
             taskRunCompute.Wait();
             var taskRunResult = taskRunCompute.Result;
-            Console.WriteLine($"Task created using `new Task` completed, resulting in {taskRunResult}.");
+            Console.WriteLine($"Task created using `new Task` completed, resulting in {taskRunResult}, " +
+                $"completed successfully: {taskRunCompute.IsCompletedSuccessfully}");
 
             // Cancellation token for Tasks.
             CancellationTokenSource cts1 = new CancellationTokenSource();
@@ -39,16 +42,17 @@ namespace Clr
             Console.WriteLine($"Task created to be cancelled using `new Task()`.");
             var newTaskComputeCancelled = new Task<int>(() => ComputeWithTask(cts1.Token, inputValue), cts1.Token);
             newTaskComputeCancelled.Start();
-            cts1.Cancel();
+            cts1.Cancel();      // We are simulating a user cancelling the task.
             try
             {
                 // Exception gets thrown by the Task only when referencing .Result or .Wait()
                 var newTaskResultCancelled = newTaskComputeCancelled.Result;
-                Console.WriteLine($"Task created using `new Task` completed.");
+                Console.WriteLine($"Task created using `new Task` completed successfully: {newTaskComputeCancelled.IsCompletedSuccessfully}.");
             }
             catch (AggregateException ex)
             {
-                Console.WriteLine("Task created using `new Task` cancelled.");
+                if (ex.InnerExceptions.Any(ie => ie is TaskCanceledException))
+                    Console.WriteLine($"Task created using `new Task` cancelled: {newTaskComputeCancelled.IsCanceled}.");
             }
 
             // Another cancellation token for Tasks.
@@ -57,16 +61,17 @@ namespace Clr
             // Task.Run()
             Console.WriteLine($"Task created using `Task.Run()`.");
             var taskRunComputeCancelled = Task.Run(() => ComputeWithTask(cts2.Token, inputValue), cts2.Token);
-            cts2.Cancel();
+            cts2.Cancel();      // We are simulating a user cancelling the task.
             try
             {
                 // Exception gets thrown by the Task only when referencing .Result or .Wait()
                 var taskRunResultCancelled = taskRunComputeCancelled.Result;
-                Console.WriteLine($"Task created using `Task.Run()` completed.");
+                Console.WriteLine($"Task created using `Task.Run()` completed successfully: {taskRunComputeCancelled.IsCompletedSuccessfully}.");
             }
             catch (AggregateException ex)
             {
-                Console.WriteLine("Task created using `Task.Run()` cancelled.");
+                if (ex.InnerExceptions.Any(ie => ie is TaskCanceledException))
+                    Console.WriteLine($"Task created using `Task.Run()` cancelled: {taskRunComputeCancelled.IsCanceled}.");
             }
             Console.WriteLine("Done...");
         }
