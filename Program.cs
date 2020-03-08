@@ -6,7 +6,7 @@ namespace Clr
     {
         static void Main(string[] args)
         {
-            new _5_CancellationTokens().Execute();
+            new _7_Tasks().Execute();
         }
     }
 }

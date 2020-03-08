@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Clr
 {
-    public class _3_ThreadPoolExample : IExample
+    public class _3_ThreadPool : IExample
     {
         /// <summary>
         /// Thread pool threads do their work and go back to the pool.
