@@ -1,12 +1,10 @@
-﻿using System.Threading;
-
-namespace Clr
+﻿namespace Clr
 {
     class Program
     {
         static void Main(string[] args)
         {
-            new _7_Tasks().Execute();
+            new _8_ExecutionContexts().Execute();
         }
     }
 }
